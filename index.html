@@ -10,9 +10,6 @@
     <link rel="stylesheet" href="css/index.css">
     <title>CRM</title>
     <script defer src="js/main.js"></script>
-    <script defer src="js/tasks.js"></script>
-    <script defer src="js/tasksHard_1.js"></script>
-    <!-- <script defer src="js/tasksHard_2.js"></script> -->
 </head>
 
 <body class="page">
@@ -143,6 +140,10 @@
         <div class="modal">
             <div class="modal__header">
                 <h2 class="modal__title">Добавить товар</h2>
+                <div class="product-id">
+                    <span>ID:</span>
+                    <span class="product-id__number">201910241</span>
+                </div>
             </div>
 
             <form action="https://jsonplaceholder.typicode.com/posts" method="post" id="product-add-form" class="form">
@@ -192,7 +193,7 @@
                 </div>
 
             </form>
-            <button class="btn close-btn">
+            <button class="btn close-btn js_hide-overlay">
                 <svg  width="20" height="20">
                     <use href="#close"></use>
                 </svg>

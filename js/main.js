@@ -1,63 +1,29 @@
-"use strict";
-// {
-//     //Модуль 4 задание 1
+'use strict';
 
-//     const product = "Кофемолка";
-//     const quantity = 2;
-//     const category = "Кухонная техника";
-//     const price = 1300;
-//     const sum = quantity * price;
+// Находим элементы на странице ==============================
 
-//     console.log(`Наименование товара: ${product}`)
-//     console.log(`Общая сумма товара: ${sum} любых денег`)
-// }
+const addProductBtn = document.querySelector('.form__btn_add-product');
+const overlay = document.querySelector('.overlay');
+const hideOverlay = document.querySelector('.js_hide-overlay');
 
-{
-    //Модуль 4 задание 2
+// Элементы модального окна
 
-    const product = prompt("Введите название товара");
-    const category = prompt("Введите категорию товара");
-    let price;
-    while (isNaN(price)){
-        price = +prompt("Введите цену товара");
-        if(isNaN(price)){
-            alert("Сейчас цифры не каждый можжет вводить, то есть вводить может каждый , не каждый может это делать!")
-        }
-        else if (price == ''){
-            alert("Нажали отмена")
-            break
-        }
-    };
-    let quantity;
-    while (isNaN(quantity)){
-        quantity = +prompt("Введите кол-во товара");
-        if(isNaN(quantity)){
-            alert("Сейчас цифры не каждый можжет вводить, то есть вводить может каждый , не каждый может это делать!")
-        }
-        else if (quantity == ''){
-            alert("Нажали отмена")
-            break
-        }
-    };
+const modalTitle = document.querySelector('.modal__title');
+const productId = document.querySelector('.product-id__number');
+const modalForm = document.getElementById('product-add-form');
+const discountCheckbox = document.querySelector('.discont-checkbox');
+const discontInput = document.querySelector('.form__input_checkbox');
+const totalCost = document.querySelector('.total');
+// ===========================================================
+//
+//
+// Показать оверлэй
 
-    console.log(`Тип данных для product = ${typeof product}`)
-    console.log(`Тип данных для category = ${typeof category}`)
-    console.log(`Тип данных для price = ${typeof price}`)
-    console.log(`Тип данных для quantity = ${typeof quantity}`)
-    console.log(`На складе ${quantity} единицы товара "${product}" на сумму ${quantity*price} деревянных`)
+addProductBtn.addEventListener('click', () => {
+    overlay.classList.add('overlay_active');
+});
 
-}
-
-// {
-//     const  myWeight = 320;
-//     const speedLight = 3e8;
-
-//     console.log(myWeight * Math.pow(speedLight, 2))
-
-// }
-
-
-
-
-
-
+// Скрыть оверлэй
+hideOverlay.addEventListener('click', () => {
+    overlay.classList.remove('overlay_active');
+})

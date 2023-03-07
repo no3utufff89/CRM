@@ -91,13 +91,21 @@ fieldset {
 }
 
 .overlay {
-    top: 50%;
     position: absolute;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     height: 100vh;
+    transition: background-color 0.5s ease;
+    background-color: #fff;
     display: none;
+    
+}
+
+.overlay_active {
+    display: block;
+    background-color: #a1a1a1ba;
 }
 
 @media (max-width:820px) {}

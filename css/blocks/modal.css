@@ -1,4 +1,6 @@
 .modal {
+    top: 50%;
+    transform: translateY(-50%);
     padding: 32px 106px 28px 106px;
     background-color: var(--main-modal-bg-color);
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
@@ -13,6 +15,10 @@
 .modal__header {
     border-bottom: 1px solid var(--main-border-color);
     margin-bottom: 21px;
+    padding-bottom: 21px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .modal__title {
@@ -20,13 +26,24 @@
     font-size: 24px;
     line-height: 29px;
     letter-spacing: 0.1em;
-    padding-bottom: 21px;
 }
-
+.product-id {
+    font-weight: 600;
+font-size: 10px;
+line-height: 12px;
+text-transform: uppercase;
+color: #C5C5C5;
+}
 .close-btn {
     font-size: 0;
     position: absolute;
     top: 20px;
     right: 30px;
     display: block;
+    
+}
+.close-btn:hover > svg {
+    transition:  0.4s ease;
+    transform: rotate(90deg);
+    color: #ce1a1a;
 }
