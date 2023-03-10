@@ -1,29 +1,21 @@
-'use strict';
 
-// Находим элементы на странице ==============================
+import getDocumentElements from './modules/documentElements.js';
+import {initialValue} from './modules/goods.js';
+import {renderGoods} from './modules/renderGoods.js';
+import {overlayControls} from  './modules/overlayControls.js';
 
-const addProductBtn = document.querySelector('.form__btn_add-product');
-const overlay = document.querySelector('.overlay');
-const hideOverlay = document.querySelector('.js_hide-overlay');
+const init = () => {
+    const elements = getDocumentElements();
+    const data = initialValue;
+    const output = elements.list;
 
-// Элементы модального окна
+    overlayControls(elements);
+    renderGoods(output, data);
+}
+init();
 
-const modalTitle = document.querySelector('.modal__title');
-const productId = document.querySelector('.product-id__number');
-const modalForm = document.getElementById('product-add-form');
-const discountCheckbox = document.querySelector('.discont-checkbox');
-const discontInput = document.querySelector('.form__input_checkbox');
-const totalCost = document.querySelector('.total');
-// ===========================================================
-//
-//
-// Показать оверлэй
 
-addProductBtn.addEventListener('click', () => {
-    overlay.classList.add('overlay_active');
-});
 
-// Скрыть оверлэй
-hideOverlay.addEventListener('click', () => {
-    overlay.classList.remove('overlay_active');
-})
+
+
+
