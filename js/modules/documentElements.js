@@ -7,7 +7,7 @@ const hideOverlay = document.querySelector('.js_hide-overlay');
 const list = document.querySelector('.table-body');
 
 // Элементы модального окна
-
+const modal = document.querySelector('.modal');
 const modalTitle = document.querySelector('.modal__title');
 const productId = document.querySelector('.product-id__number');
 const modalForm = document.getElementById('product-add-form');
@@ -24,7 +24,8 @@ return {
     discountCheckbox,
     discontInput,
     totalCost,
-    list
+    list,
+    modal,
 }
 }
 export default getDocumentElements;
