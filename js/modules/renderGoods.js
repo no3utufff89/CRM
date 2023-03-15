@@ -1,9 +1,10 @@
 import { createRow } from "./createRow.js"
 
-export const renderGoods =(list, data = []) => {
-data.map((item, index) =>{
-    list.append(
-        createRow(index , {
+export const renderGoods =(outputTable, data = []) => {
+
+data.forEach((item, index) =>{
+    outputTable.append(
+        createRow(index +1, {
             id: item.id,
             title: item.title,
             price: item.price,

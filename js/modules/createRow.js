@@ -1,6 +1,6 @@
 import createElem from "./createElem.js";
 export const createRow = (
-    rowIndex, {
+    index,{
     id,
     title,
     price,
@@ -8,7 +8,8 @@ export const createRow = (
     count,
     units,
 }) => {
-const row = createElem('tr',{className:'table__row'});
+const row = createElem('tr',{className:'table__row product'});
+row.id = id;
 const cellId = createElem('td',{className: 'table__cell-value id'},id);
 const cellTitle = createElem('td',{className:'table__cell-value name'},title);
 const cellCategory = createElem('td',{className:'table__cell-value categoty'},category);
@@ -21,7 +22,7 @@ cellCost.innerHTML = `$${count * price}`;
 const cellControls = createElem('td',{className:'table__cell-value controls'});
 const imgBtn = createElem('button',{className:'btn controls__btn controls__btn_img_bad', type:'button',
     title:'Изменить изображение'});
-const editBtn = createElem('button',{className:'btn controls__btn controls__btn_chqnge',type: 'button',
+const editBtn = createElem('button',{className:'btn controls__btn controls__btn_change',type: 'button',
     title:'Редактировать товар'});
 editBtn.innerHTML = `<svg class="icon change-icon" width="20" height="20">
                                         <use href="#change-icon"></use>
@@ -33,6 +34,7 @@ delBtn.innerHTML = `<svg class="icon delete-icon" width="20" height="20">
                                     </svg>`;
 cellControls.append(imgBtn, editBtn, delBtn);
 row.append(
+
     cellId,
     cellTitle,
     cellCategory,
@@ -42,5 +44,6 @@ row.append(
     cellCost,
     cellControls
 );
+
 return row;
 }
