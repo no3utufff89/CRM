@@ -116,7 +116,25 @@
     .controls__btn_delete {
         background-image: url(../../assets/svg/delete-icon.svg);
     }
-    
+
+    .name {
+        position: relative;
+    }
+    .name_discount {
+
+        background-image: url(../../assets/svg/discount-icon.svg);
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+
+        background-repeat: no-repeat;
+    }
+    ::placeholder {
+        font-size: 12px;
+    }
     @media (max-width:820px) {
         .controls {
             row-gap: 20px;

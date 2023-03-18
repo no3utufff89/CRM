@@ -28,7 +28,7 @@
                     <input type="search" class="search__input" placeholder="Поиск по наименованию и категории">
                     <button class="btn search__btn">Поиск</button>
                 </form>
-                <button type="button" class="btn form__btn_add-product">Добавить товар</button>
+                <button type="button" class="btn form__btn_add-product ">Добавить товар</button>
             </div>
             <div class="table-wrapper">
                 <table cellpadding="0" cellspacing="0" class="table">
@@ -121,12 +121,12 @@
                     <span class="elements__total">276</span>
                 </div>
                 <div class="page-arrows">
-                    <button class="btn page-arrows__btn page-arrows__btn_next" title="Показать дальше">Следующая страница
+                    <button class="btn page-arrows__btn page-arrows__btn_next" title="Туды">Следующая страница
                         <svg class="icon arrow-icon" width="6" height="10">
                             <use href="#arrow"></use>
                         </svg>
                     </button>
-                    <button class="btn page-arrows__btn page-arrows__btn_prev" title="Показать предидущие">Предидущая страница
+                    <button class="btn page-arrows__btn page-arrows__btn_prev" title="Сюды">Предидущая страница
                         <svg class="icon arrow-icon arrow-icon_right" width="6" height="10">
                             <use href="#arrow"></use>
                         </svg>
@@ -146,33 +146,33 @@
                 </div>
             </div>
 
-            <form action="https://jsonplaceholder.typicode.com/posts" method="post" id="product-add-form" class="form">
+            <form action="" id="product-form" class="form">
                 <fieldset class="form__fieldset">
                     <fieldset class="inner-fieldset">
                         <label class="form__label">Наименование</label>
-                        <input type="text" name="name" class="form__input">
+                        <input type="text" name="name" class="form__input js-form-name" required>
 
                         <label class="form__label">Категория</label>
-                        <input type="text" name="category" class="form__input">
+                        <input type="text" name="category" class="form__input js-form-category" required>
 
                         <label class="form__label">Единицы измерения</label>
-                        <input type="text" name="units" class="form__input">
+                        <input type="text" name="units" class="form__input js-form-units" required>
 
                         <label class="form__label">Дисконт</label>
                         <div class="form__row">
-                            <input type="checkbox" value="on" name="discont" class="form__checkbox_custom discont-checkbox">
-                            <input type="number" name="discont" class="form__input form__input_checkbox">
+                            <input type="checkbox" name="discont" class="form__checkbox_custom discont-checkbox" >
+                            <input type="number" name="discontValue" class="form__input form__input_checkbox" >
                         </div>
                     </fieldset>
                     <fieldset class="inner-fieldset">
                         <label class="form__label">Описание</label>
-                        <textarea name="description" class="form__input form__input_noresize"></textarea>
+                        <textarea name="description" class="form__input form__input_noresize js-form-desc" required></textarea>
 
                         <label class="form__label">Количество</label>
-                        <input type="number" name="count" class="form__input">
+                        <input type="number" name="count" class="form__input js-form-count" required>
 
                         <label class="form__label">Цена</label>
-                        <input type="number" name="price" class="form__input">
+                        <input type="number" name="price" class="form__input js-form-price"required >
                     </fieldset>
                     <div class="special">
 
@@ -188,8 +188,8 @@
 
                 </fieldset>
                 <div class="btn-row row row__al-i-c">
-                    <p class="info__text info__text_modal">Итоговая стоимость: <span class="currency">$</span><span class="total">900.00</span></p>
-                    <button type="submit" id="product-add-form" class="form__btn form__btn_add-product">Добавить товар</button>
+                    <p class="info__text info__text_modal">Итоговая стоимость: <span class="currency">$</span><span class="total total__current-product">900.00</span></p>
+                    <button type="submit" form="product-form" id="product-add-form" class="form__btn form__btn_add-product submit-btn">Добавить товар</button>
                 </div>
 
             </form>
