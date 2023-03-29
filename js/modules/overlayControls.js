@@ -1,4 +1,4 @@
-import createNewProduct from "./createNewProduct.js";
+import {createNewProduct} from "./builder.js";
 import productCost from "./productCost.js";
 import addToBase from "./addToBase.js";
 import { renderTotalSum } from "./renderTotalSum.js";

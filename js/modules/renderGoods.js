@@ -1,4 +1,4 @@
-import { createRow } from "./createRow.js"
+import { createRow } from "./builder.js"
 import tableControls from "./tableControls.js";
 import {renderTotalSum} from "./renderTotalSum.js";
 

@@ -11,7 +11,7 @@ list.addEventListener('click', (e) => {
         target.closest('.product').remove();
         deleteDataElement(productId,data);
         renderTotalSum(data,{allProductsCost});
-    };
+    }
 })
 }
 export default tableControls;
