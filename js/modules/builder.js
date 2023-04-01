@@ -58,6 +58,7 @@ export const createRow = (
         count,
         units,
         discont,
+        image,
     }) => {
     if (discont === false) {
         discont = 0;
@@ -66,6 +67,7 @@ export const createRow = (
     sum -= (sum * discont) / 100;
     const row = createElem('tr',{className:'table__row product'});
     row.id = id;
+    row.dataset.image = image;
     const cellId = createElem('td',{className: 'table__cell-value id'},id);
     const cellTitle = createElem('td',{className:'table__cell-value name'},title);
     const discontMarker = createElem('span',{className:'name_discount', title:'Есть скидка'});
@@ -81,8 +83,8 @@ export const createRow = (
     cellCost.innerHTML = `$${sum}`;
 
     const cellControls = createElem('td',{className:'table__cell-value controls'});
-    const imgBtn = createElem('button',{className:'btn controls__btn controls__btn_img_bad', type:'button',
-        title:'Изменить изображение'});
+    const imgBtn = createElem('button',{className:'btn controls__btn controls__btn_img_ok', type:'button',
+        title:'Изображение'});
     const editBtn = createElem('button',{className:'btn controls__btn controls__btn_change',type: 'button',
         title:'Редактировать товар'});
     editBtn.innerHTML = `<svg class="icon change-icon" width="20" height="20">
@@ -107,4 +109,10 @@ export const createRow = (
     );
 
     return row;
+}
+export const createImagePopup = (imgPath) => {
+    let top = window.screen.height / 2 - 300;
+    let left = window.screen.width / 2 - 300;
+    const imgPopup = open(imgPath, 'blank','width=600,height=600');
+    imgPopup.moveTo(left,top);
 }

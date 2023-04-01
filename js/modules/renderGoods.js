@@ -14,10 +14,10 @@ data.forEach((item, index) =>{
             count: item.count,
             units: item.units,
             discont: item.discont,
+            image:item.images.small,
         }),
     );
 });
     renderTotalSum(data,elements);
     tableControls(elements,data);
-
 }
