@@ -1,23 +1,23 @@
 import { createRow } from "./builder.js"
 import tableControls from "./tableControls.js";
 import {renderTotalSum} from "./renderTotalSum.js";
+import getDocumentElements from "./documentElements.js";
+import {getItems} from "./dataActions.js";
+import { overlayControls } from "./overlayControls.js";
+const elements = getDocumentElements();
 
-export const renderGoods =(elements, data = []) => {
+export const renderGoods = async () => {
+
+    const data = await getItems();
     const outputTable = elements.list;
-data.forEach((item, index) =>{
-    outputTable.append(
-        createRow(index +1,  {
-            id: item.id,
-            title: item.title,
-            price: item.price,
-            category: item.category,
-            count: item.count,
-            units: item.units,
-            discont: item.discont,
-            image:item.images.small,
-        }),
-    );
-});
+    for (const item of data) {
+        outputTable.append(
+            createRow(item),
+        );
+    }
+
+
+    overlayControls(data);
     renderTotalSum(data,elements);
     tableControls(elements,data);
 }

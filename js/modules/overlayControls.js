@@ -2,8 +2,11 @@ import {createNewProduct} from "./builder.js";
 import productCost from "./productCost.js";
 import addToBase from "./addToBase.js";
 import { renderTotalSum } from "./renderTotalSum.js";
+import getDocumentElements from "./documentElements.js";
+import { addItem } from "./dataActions.js";
+const elements = getDocumentElements();
 
-export const overlayControls = (elements,data) => {
+export const overlayControls = (data) => {
     const {
         discountCheckbox,
         discountInput,
@@ -14,6 +17,8 @@ export const overlayControls = (elements,data) => {
         overlay,
         hideOverlay,
         modalForm,
+        errorBox,
+
     } = elements;
 
     // Закрытие модалки
@@ -71,15 +76,18 @@ const initialState = () => {
     productPrice.addEventListener('change', () => {
         productCost(elements);
     });
-
+    errorBox.addEventListener('click',e => {
+        let target = e.target;
+        if (target.closest('button')) {
+            errorBox.classList.remove('active');
+        }
+    })
     // Отправка формы
     modalForm.addEventListener('submit', e => {
     e.preventDefault();
-    console.log('form submit');
-    addToBase(elements,data);
-    closeModal();
-    renderTotalSum(data,elements);
-    console.log(data)
+    // addToBase(elements,data);
+    addItem(elements)
+    // closeModal();
+    // renderTotalSum(data,elements);
     })
-
 }

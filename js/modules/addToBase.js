@@ -12,7 +12,7 @@ const addToBase = (elements,data) => {
         units: product.units,
         count: Number(product.count),
         price: Number(product.price),
-        discont: product.discontValue ? Number(product.discontValue) : false,
+        discount: product.discontValue ? Number(product.discontValue) : false,
     };
 
     data.push(newProduct);

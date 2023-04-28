@@ -49,29 +49,20 @@ export const createNewProduct = (elements) => {
 
     });
 }
-export const createRow = (
-    index,{
-        id,
-        title,
-        price,
-        category,
-        count,
-        units,
-        discont,
-        image,
-    }) => {
-    if (discont === false) {
-        discont = 0;
+export const createRow = (item) => {
+    let {id, title, price, category, count, units, discount, image} = item;
+    if (discount === false) {
+        discount = 0;
     }
     let sum = price * count;
-    sum -= (sum * discont) / 100;
+    sum -= (sum * discount) / 100;
     const row = createElem('tr',{className:'table__row product'});
     row.id = id;
     row.dataset.image = image;
     const cellId = createElem('td',{className: 'table__cell-value id'},id);
     const cellTitle = createElem('td',{className:'table__cell-value name'},title);
     const discontMarker = createElem('span',{className:'name_discount', title:'Есть скидка'});
-    if (discont > 0) {
+    if (discount > 0) {
         cellTitle.append(discontMarker)
     }
     const cellCategory = createElem('td',{className:'table__cell-value categoty'},category);
@@ -113,6 +104,6 @@ export const createRow = (
 export const createImagePopup = (imgPath) => {
     let top = window.screen.height / 2 - 300;
     let left = window.screen.width / 2 - 300;
-    const imgPopup = open(imgPath, 'blank','width=600,height=600');
+    const imgPopup = open(`https://pastoral-suave-minnow.glitch.me/${imgPath}`, 'blank','width=600,height=600');
     imgPopup.moveTo(left,top);
 }

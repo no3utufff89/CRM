@@ -13,6 +13,8 @@ const modal = document.querySelector('.modal');
 const modalTitle = modal.querySelector('.modal__title');
 const productId = modal.querySelector('.product-id__number');
 const modalForm  = document.getElementById('product-form');
+const errorBox = document.querySelector('.error-box');
+const errorText = document.querySelector('.error-box__text');
 
 
 // Элементы формы
@@ -49,6 +51,8 @@ return {
     productDescription,
     productCount,
     productPrice,
+    errorBox,
+    errorText,
 
 }
 }
