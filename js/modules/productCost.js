@@ -1,5 +1,5 @@
-const productCost =(elements) => {
-    const {currentProductCost, productPrice, productCount, discountCheckbox, discountInput} = elements;
+const productCost =(modalElements) => {
+    const {currentProductCost, productPrice, productCount, discountCheckbox, discountInput} = modalElements;
 
     let totalCost = 0;
 
