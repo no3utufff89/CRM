@@ -22,3 +22,13 @@
     align-items: center;
     justify-content: flex-end;
 }
+.form__btn_add-product {
+    background-color: var(--main-primary);
+    color: var(--main-color);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    text-transform: uppercase;
+    padding: 10px 25px;
+    border-radius: 8px;
+}

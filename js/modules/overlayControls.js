@@ -1,9 +1,10 @@
 import {createNewProduct} from "./builder.js";
 import productCost from "./productCost.js";
-import addToBase from "./addToBase.js";
+// import addToBase from "./addToBase.js";
 import { renderTotalSum } from "./renderTotalSum.js";
 import getDocumentElements from "./documentElements.js";
 import { addItem } from "./dataActions.js";
+import showModal from "./showModal.js";
 const elements = getDocumentElements();
 
 export const overlayControls = (data) => {
@@ -18,6 +19,7 @@ export const overlayControls = (data) => {
         hideOverlay,
         modalForm,
         errorBox,
+        filterBtn,
 
     } = elements;
 
@@ -34,16 +36,16 @@ const initialState = () => {
         discountCheckbox.checked = false;
         modalForm.reset();
     }
-
-    discountCheckbox.addEventListener('change', () => {
-        if (discountCheckbox.checked === true) {
-            discountInput.removeAttribute('disabled')
-           discountInput.value = 0;
-        } else {
-            productCost(elements);
-            initialState();
-        } 
-    })
+    //
+    // discountCheckbox.addEventListener('change', () => {
+    //     if (discountCheckbox.checked === true) {
+    //         discountInput.removeAttribute('disabled')
+    //        discountInput.value = 0;
+    //     } else {
+    //         productCost(elements);
+    //         initialState();
+    //     }
+    // })
     // Открытие модалки
 
     const openModal = () => {
@@ -89,5 +91,9 @@ const initialState = () => {
     addItem(elements)
     // closeModal();
     // renderTotalSum(data,elements);
+    })
+
+    filterBtn.addEventListener('click', () => {
+        showModal();
     })
 }

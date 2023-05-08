@@ -1,4 +1,5 @@
 import {generateId} from "./generateId.js";
+import {deleteItem, getCurrentItem} from "./dataActions.js";
 
 export const createElem = (tag, attr = {}, text) => {
     const elem = document.createElement(tag);
@@ -49,7 +50,7 @@ export const createNewProduct = (elements) => {
 
     });
 }
-export const createRow = (item) => {
+export const createRow = (item, elements) => {
     let {id, title, price, category, count, units, discount, image} = item;
     if (discount === false) {
         discount = 0;
@@ -98,6 +99,29 @@ export const createRow = (item) => {
         cellCost,
         cellControls
     );
+    row.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.closest('.controls__btn_change')) {
+            const itemId = target.closest('tr').id;
+            getCurrentItem(itemId);
+
+        }
+        if (target.closest('.controls__btn_delete')) {
+            let productId = target.closest('.product').id;
+            // productId = Number(productId)
+            target.closest('.product').remove();
+            // deleteDataElement(productId,data);
+
+            deleteItem(productId, elements);
+
+        }
+        if (target.closest('.controls__btn_img_ok')) {
+            let imgPath = target.closest('.product').attributes[2].textContent;
+            createImagePopup(imgPath);
+        }
+    })
+
+
 
     return row;
 }
