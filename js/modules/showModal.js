@@ -108,7 +108,8 @@ const showModal = async (elements, data) => {
         const descriptionInput = createElem('textarea', {
             name: 'description',
             className: 'form__input form__input_noresize js-form-desc',
-            required:'required'});
+            required:'required',
+            minLength: 80});
 
         const amountLabel = createElem('label', {className:'form__label'},'Количество');
         const productCount = createElem('input', {
@@ -370,12 +371,39 @@ const showModal = async (elements, data) => {
 
         })
 
+        // Ограничения ввода инпутов
+
+        const inputStringTypeArr = [nameInput, categoryInput, descriptionInput];
+            inputStringTypeArr.forEach(elem => {
+            elem.addEventListener('input', () => {
+                elem.value = elem.value.replace(/(^[\s-])|([^а-я\s-])/i, '');
+            })
+        })
+
+        unitsInput.addEventListener('input', () => {
+            unitsInput.value = unitsInput.value.replace(/[^а-я]/ig, '');
+        })
+
+        const inputNumberTypeArr = [discountInput, productCount, productPrice];
+        inputNumberTypeArr.forEach(elem => {
+            elem.addEventListener('input', () => {
+                elem.value = elem.value.replace(/\D/g,'');
+            })
+        })
+
 
         // Отправка формы
-
         submitBtn.addEventListener('click', e => {
             e.preventDefault();
-            addItem(modalElements, elements)
+            if (!descriptionInput.checkValidity()) {
+                descriptionInput.style.border = '1px solid red';
+                descriptionInput.value = descriptionInput.validationMessage
+
+            } else {
+                addItem(modalElements, elements)
+            }
+
+
         });
 
         changeBtn.addEventListener('click', (e) => {
