@@ -4,9 +4,12 @@ import {renderTotalSum} from "./renderTotalSum.js";
 import showModal from "./showModal.js";
 
 const URL = `https://pastoral-suave-minnow.glitch.me/api/goods`;
+const URlCategories = `https://pastoral-suave-minnow.glitch.me/api/category `;
 const headers = {
     'Content-Type': 'application/json'
 }
+
+// Формат BASE64
 
 export const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -21,7 +24,7 @@ export const toBase64 = file => new Promise((resolve, reject) => {
     reader.readAsDataURL(file);
 });
 
-// Получение данных
+// Получение всех товаров
 
 export const getItems = async () => {
     try {
@@ -35,6 +38,22 @@ export const getItems = async () => {
         console.log(`При загрузке произошла ошибка: ${err}`);
     }
 };
+
+// Получить список категорий
+
+export const getCategories = async () => {
+    try {
+        const items = await fetch(URlCategories, {
+            method: 'GET',
+            headers: headers,
+        });
+        const categories = await items.json();
+        return categories;
+    } catch (err) {
+        console.log(`При загрузке произошла ошибка: ${err}`);
+    }
+};
+
 // Удаление данных
 
 export const deleteItem = async (itemId, elements) => {
@@ -59,37 +78,40 @@ export const deleteItem = async (itemId, elements) => {
     }
   };
 
+// Получить данные по конкретному товару
+
 export const getCurrentItem = async (itemId) => {
+
     try {
+
         fetch(`${URL}/${itemId}`, {
             method: 'GET',
             headers: headers,
         }).then(data => data.json())
           .then(data => showModal(null, data));
-        console.log('getCurrent')
 
-    } catch (err) {
+
+
+
+    }
+    catch (err) {
         console.log(`При загрузке произошла ошибка: ${err}`);
     }
+
 }
+
+// Изменить товар
 
 export const changeItem = async (modalElements, data) => {
     const {
         discountCheckbox,
         discountInput,
-        productCount,
-        productPrice,
-        submitProduct,
-        addNewProductBtn,
         overlay,
-        hideOverlay,
         modalForm,
         errorBox,
         errorText,
         idNumber,
         fileInput,
-
-
     } = modalElements;
     const formData = new FormData(modalForm);
     const product = Object.fromEntries(formData);
@@ -129,16 +151,14 @@ export const changeItem = async (modalElements, data) => {
      err.message ? errorText.textContent = `Ошибка: ${err}` : errorText.textContent = `Что то пошло не так`;
  }
 }
+
+// Добавить товар
+
 export const addItem = async (modalElements, elements) => {
     const {
         discountCheckbox,
         discountInput,
-        productCount,
-        productPrice,
-        submitProduct,
-        addNewProductBtn,
         overlay,
-        hideOverlay,
         modalForm,
         errorBox,
         errorText,
@@ -168,8 +188,6 @@ export const addItem = async (modalElements, elements) => {
          if (response.ok) {
              const data = await response.json();
              elements.list.append(createRow(data))
-            //  overlay.classList.remove('overlay_active');
-             
              discountInput.removeAttribute('disabled')
              discountCheckbox.checked = false;
              modalForm.reset();
@@ -189,34 +207,23 @@ export const addItem = async (modalElements, elements) => {
  }
 }
 
-
-
-
-// export const getItems = async (url, {
-//     method = 'get',
-//     callback,
-//     body,
-//     headers,
-// }) => {
-//     try {
-//         const options = {
-//             method,
-//         };
-//
-//         if (body) options.body = JSON.stringify(body);
-//         if (headers) options.headers = headers;
-//
-//         const response = await fetch(url, options);
-//
-//         if (response.ok) {
-//             const data = await response.json();
-//             if (callback) callback(null, data);
-//             return;
-//         }
-//
-//         throw new Error(response.status);
-//
-//     } catch (err) {
-//         callback(err);
-//     }
-// }
+export const getSearch = async (e) => {
+    const { value } = e.target;
+    if (value.length !== 0) {
+        try {
+            const items = await fetch(`${URL}/?search=${value}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const itemArray = await items.json();
+            console.log(itemArray)
+            return itemArray;
+        } catch (err) {
+            console.log(`Произошла ошибка: ${err}`);
+        }
+    } else {
+        return getItems(); // render full goods list
+    }
+};

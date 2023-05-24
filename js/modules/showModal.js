@@ -1,5 +1,5 @@
-import {createElem} from "./builder.js";
-import { addItem, changeItem } from "./dataActions.js";
+import {createDataListOption, createElem, createRow, preload} from "./builder.js";
+import {addItem, changeItem, getCategories, getItems} from "./dataActions.js";
 import loadStyle from "./loadStyle.js";
 import productCost from "./productCost.js";
 const showModal = async (elements, data) => {
@@ -69,7 +69,17 @@ const showModal = async (elements, data) => {
             type: 'text',
             name: 'category',
             className: 'form__input js-form-category',
+
             required:'required'});
+        categoryInput.setAttribute('list','category-list');
+        const dataList = createElem('datalist', {
+            id: 'category-list',
+        })
+        const categories = await getCategories();
+        for (const item of categories) {
+            dataList.append(
+            createDataListOption(item)
+        )}
 
         const unitsLabel = createElem('label', {className:'form__label'},'Единицы измерения');
         const unitsInput = createElem('input', {
@@ -132,6 +142,7 @@ const showModal = async (elements, data) => {
             nameInput,
             categoryLabel,
             categoryInput,
+            dataList,
             unitsLabel,
             unitsInput,
             discountLabel,

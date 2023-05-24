@@ -1,7 +1,14 @@
 import getDocumentElements from "./documentElements.js";
 import showModal from "./showModal.js";
-export const pageControls = (elements) => {
+import {debounce} from "./debounce.js";
+import {searchRenderGoods} from "./builder.js";
+const elements = getDocumentElements();
+export const pageControls = () => {
+    const debouncedSearch = debounce((searchRenderGoods), 300);
+
     elements.addNewProductBtn.addEventListener('click', async () => {
         await showModal(elements);
-    })
+    });
+    elements.searchInput.addEventListener('input', debouncedSearch)
+
 }

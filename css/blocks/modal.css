@@ -287,3 +287,13 @@ input[type='number'] {
     height: 200px;
 
 }
+/*#category-list {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    background-color: #5d5c5a;*/
+/*    color: white;*/
+/*    font-size: 16px;*/
+/*    text-transform: none;*/
+/*    row-gap: 5px;*/
+/*    padding: 5px;*/
+/*}*/

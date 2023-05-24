@@ -61,6 +61,11 @@ fieldset {
 
 .page {
     position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
 }
 
 .container {
@@ -106,6 +111,20 @@ fieldset {
 .overlay_active {
     display: block;
     background-color: #a1a1a1ba;
+}
+.preload-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.preload-overlay svg {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(360deg);
+    }
 }
 
 @media (max-width:820px) {}
