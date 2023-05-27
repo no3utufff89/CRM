@@ -1,5 +1,4 @@
 const getDocumentElements = () => {
-// Находим элементы на странице ==============================
 
 const addNewProductBtn = document.querySelector('.form__btn_add-product');
 const list = document.querySelector('.table-body');

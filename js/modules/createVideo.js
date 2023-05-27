@@ -1,5 +1,3 @@
-
-
 export const loader = {
     loader: `
       <video  autoplay muted loop preload style="display: block; margin: 0 auto;">

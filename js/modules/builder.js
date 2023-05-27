@@ -1,8 +1,9 @@
-import {generateId} from "./generateId.js";
 import {deleteItem, getCurrentItem, getSearch} from "./dataActions.js";
 import getDocumentElements from "./documentElements.js";
 import {loader} from "./createVideo.js";
+import loadStyle from "./loadStyle.js";
 const elements = getDocumentElements();
+
 export const createElem = (tag, attr = {}, text) => {
     const elem = document.createElement(tag);
     Object.assign(elem, attr);
@@ -11,47 +12,7 @@ export const createElem = (tag, attr = {}, text) => {
     }
     return elem;
 };
-export const createNewProduct = (elements) => {
-    const {
-        modalForm,
-        productId,
-        discountCheckbox,
-        discountInput,
-        currentProductCost,
-        submitProduct,
-        fileAddBtn,
-        productName,
-        productCategory,
-        productUnit,
-        productDescription,
-        productCount,
-        productPrice
-    } = elements;
 
-    productId.textContent = generateId();
-    currentProductCost.innerHTML = 0;
-    discountInput.placeholder = 'Галочку поставить надо';
-    modalForm.addEventListener('change', (e) => {
-        const target = e.target;
-
-
-
-
-
-        // Обработка чекбокса
-        // if (target === discountCheckbox) {
-        //     discountInput.toggleAttribute('disabled');
-        //     discountCheckbox.toggleAttribute('checked');
-        //     if (discountInput.hasAttribute('disabled')) {
-        //         discountInput.value = '';
-
-        //     } else {
-        //         discountInput.value = 0;
-        //     }
-        // }
-
-    });
-}
 export const createRow = (item) => {
     let {id, title, price, category, count, units, discount, image} = item;
     if (discount === false) {
@@ -77,8 +38,19 @@ export const createRow = (item) => {
     cellCost.innerHTML = `$${sum}`;
 
     const cellControls = createElem('td',{className:'table__cell-value controls'});
-    const imgBtn = createElem('button',{className:'btn controls__btn controls__btn_img_ok', type:'button',
+    const imgBtn = createElem('button',{className:'btn controls__btn', type:'button',
         title:'Изображение'});
+       
+    if (item.image === 'image/notimage.jpg') {
+        imgBtn.classList.add('controls__btn_img_bad');
+        imgBtn.removeEventListener('click', () => {
+            return
+        })
+        imgBtn.style.cssText = 'cursor: auto';
+        imgBtn.title = 'Нет изображения';
+    } else {
+        imgBtn.classList.add('controls__btn_img_ok');
+    }
     const editBtn = createElem('button',{className:'btn controls__btn controls__btn_change',type: 'button',
         title:'Редактировать товар'});
     editBtn.innerHTML = `<svg class="icon change-icon" width="20" height="20">
@@ -91,7 +63,6 @@ export const createRow = (item) => {
                                     </svg>`;
     cellControls.append(imgBtn, editBtn, delBtn);
     row.append(
-
         cellId,
         cellTitle,
         cellCategory,
@@ -101,7 +72,7 @@ export const createRow = (item) => {
         cellCost,
         cellControls
     );
-    row.addEventListener('click', (e) => {
+    row.addEventListener('click', async (e) => {
         const target = e.target;
         if (target.closest('.controls__btn_change')) {
             const itemId = target.closest('tr').id;
@@ -110,11 +81,10 @@ export const createRow = (item) => {
         }
         if (target.closest('.controls__btn_delete')) {
             let productId = target.closest('.product').id;
-            // productId = Number(productId)
-            target.closest('.product').remove();
-            // deleteDataElement(productId,data);
-
-            deleteItem(productId, elements);
+            // target.closest('.product').remove();
+            // deleteItem(productId, elements);
+            const delTarget = target.closest('.product');
+            await createConfirmMessage(productId, elements, delTarget);
 
         }
         if (target.closest('.controls__btn_img_ok')) {
@@ -124,6 +94,7 @@ export const createRow = (item) => {
     })
     return row;
 }
+
 export const createImagePopup = (imgPath) => {
     let top = window.screen.height / 2 - 300;
     let left = window.screen.width / 2 - 300;
@@ -131,30 +102,12 @@ export const createImagePopup = (imgPath) => {
     imgPopup.moveTo(left,top);
 }
 
-export const preload = {
-    circle: `<svg version="1.1" id="loader-1" width="166" height="120" viewBox="0 0 166 120" fill="none" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
-  <path d="M135.5 30L105.5 60H128C128 84.825 107.825 105 83 105C75.425 105 68.225 103.125 62 99.75L51.05 110.7C60.275 116.55 71.225 120 83 120C116.15 120 143 93.15 143 60H165.5L135.5 30ZM38 60C38 35.175 58.175 15 83 15C90.575 15 97.775 16.875 104 20.25L114.95 9.3C105.725 3.45 94.775 0 83 0C49.85 0 23 26.85 23 60H0.5L30.5 90L60.5 60H38Z" fill="black"/>
-
-    </svg>`,
-    overlay: document.createElement('div'),
-
-    show() {
-        this.overlay.classList.add('preload-overlay');
-        this.overlay.innerHTML = this.circle;
-        document.body.append(this.overlay);
-    },
-    remove() {
-        this.overlay.remove();
-    },
-};
-
 export const searchRenderGoods = async (e) => {
     loader.show();
     const arr = await getSearch(e);
-    if (arr.length === 0) { // if arr length in responce = 0
+    if (arr.length === 0) { 
         loader.remove();
         elements.list.textContent = 'Ничего  нет'
-        // elements.searchInput.reset();
     } else {
         const outputTable = elements.list;
         outputTable.textContent = '';
@@ -162,7 +115,6 @@ export const searchRenderGoods = async (e) => {
             outputTable.append(
                 createRow(item),
             );
-
         }
     loader.remove()
     }
@@ -177,3 +129,50 @@ export const createDataListOption = (item) => {
 
 }
 
+export const createConfirmMessage = async(productId, elements, delTarget) => {
+    await loadStyle('css/blocks/confirmMessage.css');
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+
+    const modal = document.createElement('div');
+    modal.className = 'confirmModal';
+
+    const modalHeader = document.createElement('div');
+    modalHeader.className = 'confirmModal__header';
+
+    const modalTitle = document.createElement('h2');
+    modalTitle.className = 'confirmModal__title';
+    modalTitle.textContent = 'Удалить товар ?';
+
+    const confirmBtn = document.createElement('button');
+        confirmBtn.className = 'btn confirm-btn';
+        confirmBtn.type = 'button';
+        confirmBtn.textContent = 'Удалить';
+    
+    const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'btn confirm-btn js_hide-overlay';
+        cancelBtn.type = 'button';
+        cancelBtn.textContent = 'Отмена';
+
+    const btnRow = document.createElement('div');
+    btnRow.className = 'btn-row row row__al-i-c'; 
+
+    btnRow.append(confirmBtn, cancelBtn)
+
+    modalHeader.append(modalTitle);
+    modal.append(modalHeader, btnRow);
+    overlay.append(modal);
+    overlay.classList.add('overlay_active')
+    document.body.append(overlay);
+
+    overlay.addEventListener('click', ({target}) => {
+        if (target.closest('.js_hide-overlay') || target === overlay) {
+            overlay.remove();
+        }
+     })
+     confirmBtn.addEventListener('click', () => {
+        deleteItem(productId, elements);
+        overlay.remove();
+        delTarget.remove();
+     })
+}

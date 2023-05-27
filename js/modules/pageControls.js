@@ -4,7 +4,7 @@ import {debounce} from "./debounce.js";
 import {searchRenderGoods} from "./builder.js";
 const elements = getDocumentElements();
 export const pageControls = () => {
-    const debouncedSearch = debounce((searchRenderGoods), 300);
+    const debouncedSearch = debounce((searchRenderGoods), 500);
 
     elements.addNewProductBtn.addEventListener('click', async () => {
         await showModal(elements);

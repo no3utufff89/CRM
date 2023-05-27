@@ -1,9 +1,8 @@
-import {createDataListOption, createElem, createRow, preload} from "./builder.js";
+import {createDataListOption, createElem} from "./builder.js";
 import {addItem, changeItem, getCategories, getItems} from "./dataActions.js";
 import loadStyle from "./loadStyle.js";
 import productCost from "./productCost.js";
 const showModal = async (elements, data) => {
-
     await loadStyle('css/blocks/modal.css');
 
         const overlay = document.createElement('div');
@@ -35,7 +34,6 @@ const showModal = async (elements, data) => {
         productId.append(productIdText, idNumber);
 
         modalHeader.append(modalTitle, productId)
-
 
         // Главная форма модалки
         const modalForm = document.createElement('form');
@@ -99,12 +97,6 @@ const showModal = async (elements, data) => {
             className: 'form__checkbox_custom discont-checkbox',
         });
 
-        // const discountInput = createElem('input', {
-        //     type: 'number',
-        //     name: 'discontValue',
-        //
-        //     className: 'form__input form__input_checkbox',
-        // });
         const discountInput = document.createElement('input');
         discountInput.className = 'form__input form__input_checkbox';
         discountInput.type = 'number';
@@ -191,9 +183,6 @@ const showModal = async (elements, data) => {
         imageBox.append(productImage, imageDelBtn);
 
         mainFormFieldset.append(firstFieldset, secFieldset, special, fileLabel, fileInput, imageBox);
-        // Матрешка общего филдсета
-        // data ? mainFormFieldset.append(firstFieldset, secFieldset, special, fileLabel, fileInput, imageBox) :
-        //        mainFormFieldset.append(firstFieldset, secFieldset, special, fileLabel, fileInput, );
 
         // Нижний блок с итоговой суммой и кнопкой добавления/изменения
 
@@ -229,7 +218,6 @@ const showModal = async (elements, data) => {
         changeBtn.textContent = 'Изменить товар';
 
         data ? btnRow.append(infoText, changeBtn) : btnRow.append(infoText, submitBtn);
-        
 
         // Сборка формы
 
@@ -277,7 +265,7 @@ const showModal = async (elements, data) => {
         overlay.classList.add('overlay_active')
         document.body.append(overlay);
 
-        // Получаем созданные элементы, далее вынести в отдельный билдер и возвращать
+        // Получаем созданные элементы
         
         const modalElements = {
             discountCheckbox,
@@ -291,9 +279,6 @@ const showModal = async (elements, data) => {
             productCount,
             idNumber,
             fileInput,
-
-
-            
         };
 
     if (data) {
@@ -319,9 +304,7 @@ const showModal = async (elements, data) => {
             discountCheckbox.setAttribute('checked', 'checked')
         }
         currentProductCost.textContent = productCost(modalElements);
-
     }
-
 
         // Закрытие модалки
 
@@ -329,7 +312,6 @@ const showModal = async (elements, data) => {
            if (target.closest('.js_hide-overlay') || target === overlay) {
                overlay.remove();
            }
-
         })
 
         // Регистрация изменений цены, кол-ва, скидки
@@ -356,6 +338,7 @@ const showModal = async (elements, data) => {
         });
 
         // Добавление картинки товара
+
         fileInput.addEventListener('change', () => {
             const fileSize = fileInput.files[0].size;
             if (fileInput.files.length > 0) {
@@ -368,7 +351,9 @@ const showModal = async (elements, data) => {
                 imageBox.style.display = 'block';
             }
         })
+
         // Удаление картинки
+
         imageDelBtn.addEventListener('click', (e) => {
             e.preventDefault();
             if (data) {
@@ -378,8 +363,6 @@ const showModal = async (elements, data) => {
                 imageBox.style.display = 'none';
                 fileInput.value = '';
             }
-
-
         })
 
         // Ограничения ввода инпутов
@@ -390,7 +373,6 @@ const showModal = async (elements, data) => {
                 elem.value = elem.value.replace(/(^[\s-])|([^а-я\s-])/i, '');
             })
         })
-
         unitsInput.addEventListener('input', () => {
             unitsInput.value = unitsInput.value.replace(/[^а-я]/ig, '');
         })
@@ -402,8 +384,8 @@ const showModal = async (elements, data) => {
             })
         })
 
-
         // Отправка формы
+
         submitBtn.addEventListener('click', e => {
             e.preventDefault();
             if (!descriptionInput.checkValidity()) {
@@ -413,13 +395,12 @@ const showModal = async (elements, data) => {
             } else {
                 addItem(modalElements, elements)
             }
-
-
         });
 
         changeBtn.addEventListener('click', (e) => {
             e.preventDefault();
             changeItem(modalElements, data);
+            
             overlay.remove()
         });
 
@@ -431,6 +412,5 @@ const showModal = async (elements, data) => {
                 errorBox.classList.remove('active');
             }
         })
-
 }
 export default showModal;

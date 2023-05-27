@@ -1,4 +1,3 @@
-
 const getTotalPrice = (data, name) => {
     let total = 0;
     total = data.reduce((previousSum, product) => {
@@ -11,7 +10,6 @@ const getTotalPrice = (data, name) => {
         return (previousSum + sum);
     }, 0);
     return total;
-
 }
 export const renderTotalSum = (data, {allProductsCost}) => {
     allProductsCost.innerHTML = getTotalPrice(data);

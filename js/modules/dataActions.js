@@ -13,14 +13,12 @@ const headers = {
 
 export const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
-
     reader.addEventListener('loadend', () => {
         resolve(reader.result);
     });
     reader.addEventListener('error', (err) => {
         reject(err);
     });
-
     reader.readAsDataURL(file);
 });
 
@@ -81,23 +79,16 @@ export const deleteItem = async (itemId, elements) => {
 // Получить данные по конкретному товару
 
 export const getCurrentItem = async (itemId) => {
-
     try {
-
         fetch(`${URL}/${itemId}`, {
             method: 'GET',
             headers: headers,
         }).then(data => data.json())
           .then(data => showModal(null, data));
-
-
-
-
     }
     catch (err) {
         console.log(`При загрузке произошла ошибка: ${err}`);
     }
-
 }
 
 // Изменить товар
@@ -224,6 +215,6 @@ export const getSearch = async (e) => {
             console.log(`Произошла ошибка: ${err}`);
         }
     } else {
-        return getItems(); // render full goods list
+        return getItems(); 
     }
 };
