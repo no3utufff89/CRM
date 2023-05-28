@@ -367,22 +367,27 @@ const showModal = async (elements, data) => {
 
         // Ограничения ввода инпутов
 
-        const inputStringTypeArr = [nameInput, categoryInput, descriptionInput];
+        const inputStringTypeArr = [nameInput, descriptionInput];
             inputStringTypeArr.forEach(elem => {
             elem.addEventListener('input', () => {
                 elem.value = elem.value.replace(/(^[\s-])|([^а-я\s-])/i, '');
             })
-        })
+        });
+
+        categoryInput.addEventListener('input', () => {
+        categoryInput.value = categoryInput.value.replace(/(^[\s-])|([^а-яvr\s-])/i, '')
+        });
+
         unitsInput.addEventListener('input', () => {
             unitsInput.value = unitsInput.value.replace(/[^а-я]/ig, '');
-        })
+        });
 
         const inputNumberTypeArr = [discountInput, productCount, productPrice];
         inputNumberTypeArr.forEach(elem => {
             elem.addEventListener('input', () => {
                 elem.value = elem.value.replace(/\D/g,'');
-            })
-        })
+            });
+        });
 
         // Отправка формы
 

@@ -7,7 +7,7 @@ export const loader = {
     overlay: document.createElement('div'),
 
     show() {
-        this.overlay.style.cssText = 'width: 100%;position: absolute;top: 0;left: 0;right: 0;bottom: 0;background-color: white;';
+        this.overlay.style.cssText = 'width: 100%;position: fixed;top: 0;left: 0;right: 0;bottom: 0;background-color: white;';
         this.overlay.innerHTML = this.loader;
         document.body.append(this.overlay);
     },
